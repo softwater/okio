@@ -25,19 +25,24 @@ import java.util.concurrent.TimeUnit;
  * example, if reading from a source times out, that source should be closed and
  * the read should be retried later. If writing to a sink times out, the same
  * rules apply: close the sink and retry later.
+ * 该类用于设置一个任务最多执行多长时间。任务超时后会放弃中断执行，稍后重试。
  *
  * <h3>Timeouts and Deadlines</h3>
  * This class offers two complementary controls to define a timeout policy.
+ * 超时状态有两种：Timeouts、Deadlines。
  *
  * <p><strong>Timeouts</strong> specify the maximum time to wait for a single
  * operation to complete. Timeouts are typically used to detect problems like
  * network partitions. For example, if a remote peer doesn't return <i>any</i>
  * data for ten seconds, we may assume that the peer is unavailable.
+ * Timeouts 表示等待单个操作完成的最大时间。最经典的用法是检测网络，比如某网址超过10秒钟都还没用返回信息，就会被标记为该网址不可用。
  *
  * <p><strong>Deadlines</strong> specify the maximum time to spend on a job,
  * composed of one or more operations. Use deadlines to set an upper bound on
  * the time invested on a job. For example, a battery-conscious app may limit
  * how much time it spends pre-loading content.
+ * Deadlines 用于设置执行某个任务所耗费的最大时间，该任务可以是多个操作。
+ * 比如，限制预加载数据所花费的时间。
  */
 public class Timeout {
   /**
